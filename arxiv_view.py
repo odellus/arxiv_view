@@ -44,6 +44,9 @@ def get_arxiv_id(arxiv_fpath):
     return arxiv_fpath[:10]
 
 def get_arxiv_titles(arxiv_fpaths):
+    print("Fetching title data through the arxiv package")
+    print("If this is your first time to use arxiv_view or you've downloaded a lot of files")
+    print("since the last time you used arxiv_view, this command may take a while")
     prev_titles = get_previous()
     titles = {}
     for fpath in arxiv_fpaths:
@@ -54,6 +57,7 @@ def get_arxiv_titles(arxiv_fpaths):
         time.sleep(0.1)
     for key, val in titles.items():
         prev_titles[key] = val
+    print("Saving titles in ./titles.json")
     persist_result(prev_titles)
     return prev_titles
 
