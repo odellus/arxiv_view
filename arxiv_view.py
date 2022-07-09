@@ -68,7 +68,9 @@ def get_arxiv_titles(arxiv_fpaths):
         prev_titles[key] = val
     print("Saving titles in ./titles.json")
     persist_result(prev_titles)
-    return prev_titles
+    titles = [(v[0],k) for (k,v) in prev_titles.items()]
+    titles.sort()
+    return titles
 
 def parse_fname(data):
     fname, _ = data.split(' : ')
@@ -108,9 +110,9 @@ def fire_up_gui(titles):
     mytree.heading('# 1', text='File Name')
     mytree.column('# 2', anchor='w', width=800)
     mytree.heading('# 2', text='Title')
-    for key, val in titles.items():
+    for (title, arxiv_id) in titles:
         # mytree.insert(END, f'{key} : {val[0]}')
-        mytree.insert('', 'end', text='1', values=(key, val[0]))
+        mytree.insert('', 'end', text='1', values=(arxiv_id, title))
     mytree.pack(side='left', padx=30, fill=BOTH)
     myscroll.config(command=mytree.yview)
     def callback(event):
